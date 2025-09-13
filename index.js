@@ -10,17 +10,20 @@ const PORT=process.env.PORT||8080
 app.use(express.json())
 app.use(cors())
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 // Database Connection Here
 dataBaseConnection()
 
 // Router Configration Here
 import userRouter from './routers/userRouter.js' 
 import contactusRouter from './routers/contactusRouter.js'
+import blogRouter from './routers/blogRouter.js'
 
 
 // Router Define Here
 app.use('/api/v1/',userRouter)
 app.use('/api/v1/',contactusRouter)
+app.use('/api/v1/',blogRouter)
 
 
 app.use('/',(req,res)=>{
