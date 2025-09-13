@@ -3,7 +3,6 @@ import Blog from "../models/blogModel.js";
 import fs from "fs";
 import path from "path";
 
-
 //  Create a new blog
 const createBlog = async (req, res) => {
   try {
@@ -23,7 +22,7 @@ const createBlog = async (req, res) => {
 
     // Image handle karo
     body.featuredImage = req.file
-      ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+      ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
       : "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg";
 
     // Blog create
@@ -58,9 +57,7 @@ const getBlogs = async (req, res) => {
   try {
     const { page = 1, limit = 12, search = "" } = req.query;
 
-    const query = search
-      ? { title: { $regex: search, $options: "i" } }
-      : {};
+    const query = search ? { title: { $regex: search, $options: "i" } } : {};
 
     const blogs = await Blog.find(query)
       .sort({ createdAt: -1 })
@@ -87,7 +84,9 @@ const getBlogBySlug = async (req, res) => {
   try {
     const blog = await Blog.findOne({ slug: req.params.slug });
     if (!blog) {
-      return res.status(404).json({ success: false, message: "Blog not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
     }
     res.status(200).json({ success: true, data: blog });
   } catch (error) {
@@ -105,13 +104,17 @@ const updateBlog = async (req, res) => {
     }
 
     if (req.file) {
-      body.featuredImage = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      body.featuredImage = `${req.protocol}://${req.get("host")}/uploads/${
+        req.file.filename
+      }`;
     }
 
     const blog = await Blog.findByIdAndUpdate(id, body, { new: true });
 
     if (!blog) {
-      return res.status(404).json({ success: false, message: "Blog not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
     }
 
     res.status(200).json({ success: true, data: blog });
@@ -120,14 +123,15 @@ const updateBlog = async (req, res) => {
   }
 };
 
-
 const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const blog = await Blog.findByIdAndDelete(id);
 
     if (!blog) {
-      return res.status(404).json({ success: false, message: "Blog not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
     }
 
     // Local image delete karo (agar default placeholder nahi hai)
@@ -144,11 +148,12 @@ const deleteBlog = async (req, res) => {
         // console.log("⚠️ Image file not found:", filePath);
       }
     }
-    res.status(200).json({ success: true, message: "Blog deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Blog deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-
-export { createBlog ,getBlogs,getBlogBySlug,updateBlog,deleteBlog  };
+export { createBlog, getBlogs, getBlogBySlug, updateBlog, deleteBlog };
