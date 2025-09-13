@@ -35,7 +35,7 @@ app.use('/api/v1/',contactusRouter)
 app.use('/api/v1/',blogRouter)
 
 
-app.use('/',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send('Server is Running....')
 })
 
