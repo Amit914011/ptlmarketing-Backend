@@ -15,10 +15,12 @@ dataBaseConnection()
 
 // Router Configration Here
 import userRouter from './routers/userRouter.js' 
+import contactusRouter from './routers/contactusRouter.js'
 
 
 // Router Define Here
 app.use('/api/v1/',userRouter)
+app.use('/api/v1/',contactusRouter)
 
 
 app.use('/',(req,res)=>{
