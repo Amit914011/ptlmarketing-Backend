@@ -24,7 +24,7 @@ const createBlog = async (req, res) => {
     // Image handle karo
     body.featuredImage = req.file
       ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
-      : "https://via.placeholder.com/800x400.png?text=Blog+Image";
+      : "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg";
 
     // Blog create
     const blog = await Blog.create(body);
