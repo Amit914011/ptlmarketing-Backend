@@ -11,7 +11,7 @@ dotenv.config()
 const uploadDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
-  console.log("✅ uploads folder created automatically");
+  // console.log("✅ uploads folder created automatically");
 }
 
 const app=express()
