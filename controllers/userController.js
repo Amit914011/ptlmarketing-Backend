@@ -62,7 +62,8 @@ const loginUser = async (req, res) => {
     // Set Cookies Here
     const option = {
       httpOnly: true,
-       secure: process.env.NODE_ENV === "production",
+      //  secure: process.env.NODE_ENV === "production",
+       secure: false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     };
