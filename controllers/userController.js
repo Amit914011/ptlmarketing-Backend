@@ -86,33 +86,6 @@ const loginUser = async (req, res) => {
 };
 
 
- const checkAuth = (req, res) => {
-  try {
-    const token = req.cookies.authToken;
-    if (!token)
-      return res
-        .status(401)
-        .json({ success: false, message: "Not authenticated" });
-
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-      if (err)
-        return res
-          .status(401)
-          .json({ success: false, message: "Invalid token" });
-
-      return res
-        .status(200)
-        .json({ success: true, message: "Authenticated", user: decoded });
-    });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error", error: error.message });
-  }
-};
-
-
-
 const logoutUser = async (req, res) => {
   try {
     res.clearCookie("authToken", {
@@ -134,4 +107,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser,logoutUser,checkAuth};
+export { registerUser, loginUser,logoutUser};
