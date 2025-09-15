@@ -62,8 +62,9 @@ const loginUser = async (req, res) => {
     // Set Cookies Here
     const option = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      // secure: process.env.NODE_ENV === "production",
+      secure: false,
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     };
     return res.cookie("authToken", token, option).status(200).json({
