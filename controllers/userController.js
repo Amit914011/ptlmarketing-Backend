@@ -62,29 +62,22 @@ const loginUser = async (req, res) => {
     // Set Cookies Here
     const option = {
       httpOnly: true,
-      //  secure: process.env.NODE_ENV === "production",
-       secure: true,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     };
-    return res
-      .cookie("authToken", token, option)
-      .status(200)
-      .json({
-        success: true,
-        message: "User Login Successfully",
-        token: token,
-      });
+    return res.cookie("authToken", token, option).status(200).json({
+      success: true,
+      message: "User Login Successfully",
+      token: token,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: `internal Server Error ${error.message}`,
-      });
+    return res.status(500).json({
+      success: false,
+      message: `internal Server Error ${error.message}`,
+    });
   }
 };
-
 
 const logoutUser = async (req, res) => {
   try {
@@ -107,4 +100,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser,logoutUser};
+export { registerUser, loginUser, logoutUser };
