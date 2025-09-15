@@ -17,8 +17,6 @@ if (!fs.existsSync(uploadDir)) {
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(express.json());
-import cors from "cors";
-
 app.use(cors({ origin: "http://localhost:5173",
     credentials: true,  }));
 
