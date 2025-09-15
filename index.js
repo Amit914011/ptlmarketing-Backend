@@ -19,12 +19,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 import cors from "cors";
 
-app.use(
-  cors({
-    origin: "https://ptlmarketing-backend.onrender.com", 
-    credentials: true, 
-  })
-);
+app.use(cors({ credentials: true }));
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
