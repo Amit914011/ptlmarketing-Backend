@@ -36,11 +36,13 @@ dataBaseConnection();
 import userRouter from "./routers/userRouter.js";
 import contactusRouter from "./routers/contactusRouter.js";
 import blogRouter from "./routers/blogRouter.js";
+import dashboardRouter from './routers/dashboardRouter.js'
 
 // Routers
 app.use("/api/v1/", userRouter);
 app.use("/api/v1/", contactusRouter);
 app.use("/api/v1/", blogRouter);
+app.use("/api/v1/", dashboardRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is Running....");

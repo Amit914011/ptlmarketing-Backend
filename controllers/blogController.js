@@ -117,7 +117,7 @@ const updateBlog = async (req, res) => {
         .json({ success: false, message: "Blog not found" });
     }
 
-    res.status(200).json({ success: true, data: blog });
+    res.status(200).json({ success: true, data: blog,message:"Blog Updated Successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

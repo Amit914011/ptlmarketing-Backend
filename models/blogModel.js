@@ -25,9 +25,7 @@ const blogSchema = new mongoose.Schema(
       type: String,
       default: "General",
     },
-    tags: {
-      type: [String],
-    },
+
     featuredImage: {
       type: String, // URL of image
     },
@@ -38,12 +36,6 @@ const blogSchema = new mongoose.Schema(
     views: {
       type: Number,
       default: 0,
-    },
-    metaTitle: {
-      type: String,
-    },
-    metaDescription: {
-      type: String,
     },
   },
   { timestamps: true }

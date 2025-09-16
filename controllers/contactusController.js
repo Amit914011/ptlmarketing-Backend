@@ -11,7 +11,7 @@ const createContactUs = async (req, res) => {
     
     return res.status(201).json({
       success: true,
-      message: "Contact Us Form has been Submitted Thank you!",
+      message: "Your request has been submitted successfully!",
       data: data,
     });
   } catch (error) {
