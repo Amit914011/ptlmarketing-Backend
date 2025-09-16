@@ -80,6 +80,15 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getAllUser = async (req, res) => {
+  try {
+    const users = await User.find({});
+    return res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
 const logoutUser = async (req, res) => {
   try {
     res.clearCookie("authToken", {
@@ -101,4 +110,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, logoutUser };
+export { registerUser, loginUser, logoutUser,getAllUser };

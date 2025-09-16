@@ -22,7 +22,7 @@ const createBlog = async (req, res) => {
 
     // Image handle karo
     body.featuredImage = req.file
-      ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
+      ? `${process.env.BASE_URL}uploads/${req.file.filename}`
       : "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg";
 
     // Blog create
