@@ -23,8 +23,13 @@ if (!fs.existsSync(uploadDir)) {
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-app.use('/uploads', express.static(uploadDir)); // use uploadDir
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://ptlmarketing.onrender.com"],
+    credentials: true,
+  })
+);
+app.use("/uploads", express.static(uploadDir)); // use uploadDir
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -36,7 +41,7 @@ dataBaseConnection();
 import userRouter from "./routers/userRouter.js";
 import contactusRouter from "./routers/contactusRouter.js";
 import blogRouter from "./routers/blogRouter.js";
-import dashboardRouter from './routers/dashboardRouter.js'
+import dashboardRouter from "./routers/dashboardRouter.js";
 
 // Routers
 app.use("/api/v1/", userRouter);

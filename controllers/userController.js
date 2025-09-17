@@ -58,13 +58,12 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1d" }
     );
-
+  const isProduction = process.env.NODE_ENV === "production";
     // Set Cookies Here
     const option = {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      secure: false,
-      sameSite: "lax",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     };
     return res.cookie("authToken", token, option).status(200).json({
