@@ -9,17 +9,16 @@ const createBlog = async (req, res) => {
     const body = req.body;
 
     // Slug generate karo
-    body.slug = slugify(body.title, { lower: true, strict: true });
+    let baseSlug = slugify(body.title, { lower: true, strict: true });
+    let slug = baseSlug;
 
-    // Duplicate slug check
-    const existingSlug = await Blog.findOne({ slug: body.slug });
-    if (existingSlug) {
-      return res.status(400).json({
-        success: false,
-        message: "Slug already exists. Use a unique slug.",
-      });
+    // Duplicate slug check with increment logic
+    let counter = 1;
+    while (await Blog.findOne({ slug })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
     }
-
+    body.slug = slug;
     // Image handle karo
     body.featuredImage = req.file
       ? `${process.env.BASE_URL}uploads/${req.file.filename}`
@@ -117,7 +116,13 @@ const updateBlog = async (req, res) => {
         .json({ success: false, message: "Blog not found" });
     }
 
-    res.status(200).json({ success: true, data: blog,message:"Blog Updated Successfully" });
+    res
+      .status(200)
+      .json({
+        success: true,
+        data: blog,
+        message: "Blog Updated Successfully",
+      });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
