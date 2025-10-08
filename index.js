@@ -61,8 +61,6 @@ app.use("/api/v1/", dashboardRouter);
 app.get("/ping", (req, res) => {
   res.send("🏓 Pong! Server is alive at " + new Date().toLocaleTimeString());
 });
-
-
 // ✅ Cron job that runs every 10 minutes
 cron.schedule("*/1 * * * *", async () => {
   try {
