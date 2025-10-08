@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://ptlmarketing-r8ym.onrender.com","https://ptlmarketing-backend-7fg9.onrender.com"],
+    origin: ["http://localhost:5173", "https://ptlmarketing-r8ym.onrender.com"],
     credentials: true,
   })
 );
@@ -39,10 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
 dataBaseConnection();
-
-app.get('/api/v1/ping',(req,res)=>{
-    res.send("🏓 Pong! Server is alive at " + new Date().toLocaleTimeString());
-})
 
 // Router Configuration
 import userRouter from "./routers/userRouter.js";
@@ -59,29 +55,25 @@ app.use("/api/v1/", dashboardRouter);
 
 
 
+
+
+// ✅ Create simple ping endpoint
+app.get("/ping", (req, res) => {
+  res.send("🏓 Pong! Server is alive at " + new Date().toLocaleTimeString());
+});
+
+
+// ✅ Cron job that runs every 10 minutes
 cron.schedule("*/1 * * * *", async () => {
   try {
     console.log("⏰ Keeping server awake:", new Date().toLocaleTimeString());
-    const res = await axios.get(`${SERVER_URL}/api/v1/get-contact`, {
-      headers: { "User-Agent": "Mozilla/5.0" },
-    });
-    console.log("✅ Ping success:", res);
+    const res = await axios.get(`${SERVER_URL}/ping`); // simple API hit
+    console.log("✅ Ping success:", res.status);
   } catch (error) {
     console.error("❌ Ping failed:", error.message);
   }
 });
 
-
-setInterval(async () => {
-  try {
-    await axios.get("https://ptlmarketing-backend-7fg9.onrender.com/api/v1/get-contact", {
-      headers: { "User-Agent": "Mozilla/5.0" },
-    });
-    console.log("Server pinged to stay awake.");
-  } catch (err) {
-    console.log("Ping failed:", err.message);
-  }
-}, 1 * 60 * 1000); // 10 minutes
 
 
 app.get("/", (req, res) => {
