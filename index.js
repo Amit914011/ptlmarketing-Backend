@@ -59,7 +59,7 @@ app.get("/ping", (req, res) => {
   console.log("🏓 Pong! Server is alive at " + timeInIndia);
 });
 // ✅ Cron job that runs every 10 minutes
-cron.schedule("*/1 * * * *", async () => {
+cron.schedule("*/10 * * * *", async () => {
   try {
     console.log("⏰ Keeping server awake:", new Date().toLocaleTimeString());
     const res = await axios.get(`${SERVER_URL}/ping`); // simple API hit
