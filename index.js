@@ -14,7 +14,7 @@ dotenv.config();
 // ES module me __dirname define karo
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const SERVER_URL = "https://ptlmarketing-backend-7fg9.onrender.com";
+const SERVER_URL = process.env.BASE_URL;
 
 // ✅ Ensure uploads folder exists
 const uploadDir = path.join(__dirname, "uploads");
@@ -52,14 +52,11 @@ app.use("/api/v1/", contactusRouter);
 app.use("/api/v1/", blogRouter);
 app.use("/api/v1/", dashboardRouter);
 
-
-
-
-
-
 // ✅ Create simple ping endpoint
 app.get("/ping", (req, res) => {
-  res.send("🏓 Pong! Server is alive at " + new Date().toLocaleTimeString());
+  const now = new Date();
+  const timeInIndia = now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  console.log("🏓 Pong! Server is alive at " + timeInIndia);
 });
 // ✅ Cron job that runs every 10 minutes
 cron.schedule("*/1 * * * *", async () => {
@@ -71,8 +68,6 @@ cron.schedule("*/1 * * * *", async () => {
     console.error("❌ Ping failed:", error.message);
   }
 });
-
-
 
 app.get("/", (req, res) => {
   res.send("Server is Running....");
