@@ -27,7 +27,7 @@ const sendEmail = async ({ to, subject, html }) => {
 // Send email to admin
 export const sendEmailToAdmin = async (contactData) => {
   const html = adminContactTemplate(contactData);
-  await sendEmail({ to: "admin@ptlmarketing.com", subject: "New Contact Us Submission", html });
+  await sendEmail({ to: "ptlmarketingg@gmail.com", subject: "New Contact Us Submission", html });
 };
 
 // Send email to client
