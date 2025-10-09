@@ -1,41 +1,38 @@
-import nodemailer from "nodemailer";
-import { adminContactTemplate, clientContactTemplate } from "./emailTemplates.js";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Send email generic function
-const sendEmail = async ({ to, subject, html }) => {
+export const sendEmailToAdmin = async (data) => {
   try {
-    await transporter.sendMail({
-      from: `"PTL Marketing" <${process.env.SMTP_USER}>`,
-      to,
-      subject,
-      html,
+    await resend.emails.send({
+      from: "PTL Marketing <noreply@ptlmarketing.com>",
+      to: "amitmrj914011@gmail.com",
+      subject: `New Contact Request from ${data.name}`,
+      html: `
+        <h3>New Inquiry Received</h3>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Message:</strong> ${data.message}</p>
+      `,
     });
-    // console.log(`✅ Email sent to ${to}`);
-  } catch (error) {
-    console.error(`❌ Error sending email to ${to}:`, error.message);
+  } catch (err) {
+    console.error("Admin email failed:", err.message);
   }
 };
 
-// Send email to admin
-export const sendEmailToAdmin = async (contactData) => {
-  const html = adminContactTemplate(contactData);
-  await sendEmail({ to: "ptlmarketingg@gmail.com", subject: "New Contact Us Submission", html });
+export const sendEmailToClient = async (data) => {
+  try {
+    await resend.emails.send({
+      from: "PTL Marketing <noreply@ptlmarketing.com>",
+      to: data.email,
+      subject: "Thank You for Contacting PTL Marketing!",
+      html: `
+        <p>Hi ${data.name},</p>
+        <p>Thank you for reaching out! Our team will contact you soon.</p>
+        <p>– PTL Marketing</p>
+      `,
+    });
+  } catch (err) {
+    console.error("Client email failed:", err.message);
+  }
 };
-
-// Send email to client
-export const sendEmailToClient = async (contactData) => {
-  const html = clientContactTemplate(contactData);
-  await sendEmail({ to: contactData.email, subject: "Thank you for contacting PTL Marketing", html });
-};
-
-export default sendEmail;
-
-
