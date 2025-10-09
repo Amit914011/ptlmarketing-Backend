@@ -5,9 +5,9 @@ const createContactUs = async (req, res) => {
   try {
     const body = req.body;
     const data = await ContactUs.create(body);
-    //  // Send emails
-    // await sendEmailToAdmin(data);
-    // await sendEmailToClient(data);
+     // Send emails
+    await sendEmailToAdmin(data);
+    await sendEmailToClient(data);
     
     return res.status(201).json({
       success: true,
