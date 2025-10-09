@@ -5,37 +5,24 @@ const createContactUs = async (req, res) => {
   try {
     const body = req.body;
     const data = await ContactUs.create(body);
-
-    // ✅ Respond first (fast response to frontend)
-    res.status(201).json({
+    //  // Send emails
+    // await sendEmailToAdmin(data);
+    // await sendEmailToClient(data);
+    
+    return res.status(201).json({
       success: true,
       message: "Your request has been submitted successfully!",
-      data,
+      data: data,
     });
-
-    // ✅ Send emails in background (non-blocking)
-    Promise.allSettled([
-      sendEmailToAdmin(data),
-      sendEmailToClient(data),
-    ])
-      .then((results) => {
-        results.forEach((r, i) =>
-          console.log(`📨 Email ${i + 1} status:`, r.status)
-        );
-      })
-      .catch((err) => {
-        console.error("❌ Email sending failed:", err.message);
-      });
   } catch (error) {
     console.error("Error creating contact:", error.message);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to submit form",
       error: error.message,
     });
   }
 };
-
 
 const getAllContactusData = async (req, res) => {
   try {
