@@ -4,7 +4,7 @@ import path from "path";
 // Storage setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // folder jaha file save hogi
+    cb(null, "/uploads/"); // folder jaha file save hogi
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)); 

@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 const SERVER_URL = process.env.BASE_URL;
 
 // ✅ Ensure uploads folder exists
-const uploadDir = path.join(__dirname, "/uploads");
+const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
   console.log("✅ uploads folder created automatically");
